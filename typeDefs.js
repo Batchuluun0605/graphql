@@ -19,7 +19,7 @@ const typeDefs = gql`
     welcome: String
     getTodos: [Todo]
     getTodo: Todo
-    getUser: User
+    getUser: [User]
   }
 
   type Mutation {

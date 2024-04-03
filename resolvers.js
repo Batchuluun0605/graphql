@@ -6,17 +6,15 @@ const resolvers = {
       return "welkome to bro";
     },
     getTodos: async () => {
-      const todos = await TodoModel.find().populate("user");
+      const todos = await TodoModel.find()
       return todos;
     },
     getTodo: async (root, args) => {
-      const todo = await TodoModel.findById({ userId: args.id }).populate(
-        "user"
-      );
+      const todo = await TodoModel.findById({ userId: args.id })
       return todo;
     },
     getUser: async () => {
-      const User = await TodoModel.find();
+      const User = await UserModel.find();
       return User;
     },
   },
@@ -41,10 +39,16 @@ const resolvers = {
       return newUser;
     },
 
-    deleteTodo: async (root, args) => {
-      const deleteTodo = TodoModel.FindByIdAndDelete(args.id);
-      return "the deleted todo succesfully";
-    },
+    deleteTodo:  async (parent, args) => {
+      try {
+          await TodoModel.findOneAndRemove({_id: args.id});
+          return "delete successfully"
+      } catch (error) {
+          console.log('Error while delete:',error);
+          return false;
+      }
+      
+  },
 
     updateTodo: async (root, args) => {
       const { id, title, detail, date } = args;
