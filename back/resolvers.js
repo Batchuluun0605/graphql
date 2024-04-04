@@ -59,12 +59,12 @@ const resolvers = {
       }
     },
 
-    updateUser: async (_, { userId, name, hobby }) => {
+    updateUser: async (_, { userId }, args) => {
       try {
         const updateUser = await UserModel.findByIdAndUpdate(
           userId,
-          name,
-          hobby
+          args.name,
+          args.hobby
         );
         return updateUser;
       } catch (error) {
